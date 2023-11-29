@@ -453,7 +453,7 @@ void SPIFFSEditor::handleRequest(AsyncWebServerRequest *request){
       while(dir.next()){
         fs::File entry = dir.openFile("r");
 #endif
-        if (isExcluded(_fs, entry.name())) {
+        if (isExcluded(_fs, entry.path())) {
 #ifdef ESP32
             entry = dir.openNextFile();
 #endif
@@ -463,7 +463,7 @@ void SPIFFSEditor::handleRequest(AsyncWebServerRequest *request){
         output += "{\"type\":\"";
         output += "file";
         output += "\",\"name\":\"";
-        output += String(entry.name());
+        output += String(entry.path());
         output += "\",\"size\":";
         output += String(entry.size());
         output += "}";
@@ -481,7 +481,7 @@ void SPIFFSEditor::handleRequest(AsyncWebServerRequest *request){
       output = String();
     }
     else if(request->hasParam("edit") || request->hasParam("download")){
-      request->send(request->_tempFile, request->_tempFile.name(), String(), request->hasParam("download"));
+      request->send(request->_tempFile, request->_tempFile.path(), String(), request->hasParam("download"));
     }
     else {
       const char * buildTime = __DATE__ " " __TIME__ " GMT";
