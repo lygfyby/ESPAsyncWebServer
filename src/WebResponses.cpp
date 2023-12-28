@@ -542,7 +542,7 @@ AsyncFileResponse::AsyncFileResponse(File content, const String& path, const Str
   _code = 200;
   _path = path;
 
-  if(!download && String(content.name()).endsWith(".gz") && !path.endsWith(".gz")){
+  if(!download && String(content.path()).endsWith(".gz") && !path.endsWith(".gz")){
     addHeader("Content-Encoding", "gzip");
     _callback = nullptr; // Unable to process gzipped templates
     _sendContentLength = true;
